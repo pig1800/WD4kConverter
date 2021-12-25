@@ -5,7 +5,7 @@ This program needs administration privilege to run.
 
 # Usage
 
-WD4kConverter \\.\PhysicalDrive[num]
+WD4kConverter \\\\.\\PhysicalDrive[num]
 
 # Thanks
 
