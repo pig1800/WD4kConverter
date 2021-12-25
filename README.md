@@ -7,6 +7,8 @@ This program needs administration privilege to run.
 
 WD4kConverter \\\\.\\PhysicalDrive[num]
 
+Physical drive numbers can be obtained by Powershell command "Get-Disk | 
+
 # Thanks
 
 Bunch of the code is copied from smartmontools.
