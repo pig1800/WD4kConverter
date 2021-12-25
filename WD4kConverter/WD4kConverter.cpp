@@ -398,6 +398,30 @@ void initSectorConfExt(void* target, uint16_t checkField, uint8_t index) {
 
 int main(int argc, char** argv)
 {
+	bool stdOutSet = true;
+	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	if (hStdOut == INVALID_HANDLE_VALUE) {
+		stdOutSet = false;
+	}
+	else {
+		DWORD mode;
+		if (!GetConsoleMode(hStdOut, &mode)) {
+			stdOutSet = false;
+		}
+		else {
+			mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+			if (!SetConsoleMode(hStdOut, mode)) {
+				stdOutSet = false;
+			}
+		}
+	}
+
+	const char* bgColorRed = stdOutSet ? "\x1b[41m" : "";
+	const char* bgColorDef = stdOutSet ? "\x1b[49m" : "";
+	const char* textColorYellow = stdOutSet ? "\x1b[33m" : "";
+	const char* textColorDef = stdOutSet ? "\x1b[39m" : "";
+	
 	if (argc != 2) {
 		printf("Usage :\n%s \\\\.\\PhysicalDrive[number]", argv[0]);
 	}
@@ -414,6 +438,7 @@ int main(int argc, char** argv)
 
 	if (handle == INVALID_HANDLE_VALUE) {
 		std::cout << "Invalid drive or no administrator privilege!\n";
+		return 1;
 	}
 
 	// IDENTIFY command requires a 512 byte buffer for data:
@@ -478,7 +503,7 @@ int main(int argc, char** argv)
 			printf("Reason Unknown\n");
 		}
 
-		printf("Your drive might not support this feature!");
+		printf("Your drive might not support this feature!\n");
 
 		return 1;
 	}
@@ -500,11 +525,11 @@ int main(int argc, char** argv)
 
 	int input;
 
-	printf("\x1b[41m--- Please double check if your drive serial is correct!                ---\n\x1b[49m");
-	printf("\x1b[33m--- Despite the function itself doesn't affect existing data            ---\n");
-	printf(        "--- Partition table and file system is directly relying on sector size! ---\n");
-	printf(        "--- Selecting wrong drive will render files inaccessible!               ---\n");
-	printf("\x1b[39mEnter Index: ");
+	printf("%s--- Please double check if your drive serial is correct!                ---%s\n", bgColorRed, bgColorDef);
+	printf("%s--- Despite the function itself doesn't affect existing data            ---\n", textColorYellow);
+	printf(  "--- Partition table and file system is directly relying on sector size! ---\n");
+	printf(  "--- Selecting wrong drive will render files inaccessible!               ---\n");
+	printf("%sEnter Index: ", textColorDef);
 
 	if (scanf("%d", &input) != 1) {
 		printf("Invalid input!\n");
