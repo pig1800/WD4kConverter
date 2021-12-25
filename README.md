@@ -9,6 +9,12 @@ WD4kConverter \\\\.\\PhysicalDrive[num]
 
 Physical drive numbers can be obtained by Powershell command "Get-Disk | Format-List"
 
+# Attention
+
+Do NOT attempt to run this program on drives already filled with data.
+Despite the function itself doesn't affect data directly, but Partition Table and File System is directly relying on sector size.
+Your data will remain byte by byte in your drive but your files will be inaccessible!
+
 # Thanks
 
 Bunch of the code is copied from smartmontools.
