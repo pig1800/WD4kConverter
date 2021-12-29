@@ -1,7 +1,7 @@
 # WD4kConverter
 
 A simple Windows command-line tool for changing logical sector size for WD/HGST Datacenter drives.
-This program needs administration privilege to run.
+This program needs administrator privilege to run.
 
 # Usage
 
