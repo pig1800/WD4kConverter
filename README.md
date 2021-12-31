@@ -2,6 +2,7 @@
 
 A simple Windows command-line tool for changing logical sector size for WD/HGST Datacenter drives.
 This program needs administrator privilege to run.
+It is designed to work on SATA interface by using ATA Pass-Through function provided by Windows.
 
 # Usage
 
